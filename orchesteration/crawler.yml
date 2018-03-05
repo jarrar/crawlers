@@ -1,0 +1,23 @@
+version: '2.1'
+
+networks:
+  jarrar-net:
+     driver: bridge
+
+services:
+    web-app:
+      #image:
+      build: ../
+      hostname: web-app
+      networks:
+        jarrar-net:
+          aliases:
+            - web-app
+            - web-app.docker
+      #volumes:
+        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+      ports:
+        - "5000:5000"
+
+#      ulimits:
+#        nofile: 65536
