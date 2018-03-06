@@ -28,18 +28,14 @@ app.logger.info('===============================================================
 
 # the 'db' import must come after instantiating Flask(__name__)
 from models import db
+
 from models import (HttpRecord)
 
 from flask_restful import Api
-from Cms import Cms
-from Register import Register
-from HAStatus import HAStatus
-from CasmMode import CasmMode
 
-
-def populate_default_data():
-    casm = CasmData.CasmData()
-    casm.change_mode('single')
+# def populate_default_data():
+#     casm = CasmData.CasmData()
+#     casm.change_mode('single')
 
 
 db.create_all()
@@ -50,10 +46,10 @@ api = Api(app)
 
 app.logger.info('APP REST API ready ...)')
 
-api.add_resource(Register, '/api/v1.0/register')
-api.add_resource(Cms, '/api/v1.0/cms/services')
-api.add_resource(HAStatus, '/api/v1.0/ha')
-api.add_resource(CasmMode, '/api/v1.0/mode')
+# api.add_resource(Register, '/api/v1.0/register')
+# api.add_resource(Cms, '/api/v1.0/cms/services')
+# api.add_resource(HAStatus, '/api/v1.0/ha')
+# api.add_resource(CasmMode, '/api/v1.0/mode')
 
 if __name__ == '__main__':
     app.run(debug=True)

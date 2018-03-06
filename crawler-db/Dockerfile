@@ -20,7 +20,9 @@ ADD ./files/packages.txt /packages.txt
 
 COPY ./app.py /app/app.py
 COPY ./config.py /app/config.py
-ADD ./models /app/
+COPY ./__init__.py /app/
+ADD ./models /app/models
+ADD ./lib /app/lib
 
 RUN pip3 install -r /packages.txt
 COPY ./files/entrypoint.sh /app/entrypoint.sh

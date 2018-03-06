@@ -32,3 +32,5 @@ services:
         #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
       ports:
         - "5050:5050"
+      environment:
+        - PYTHONPATH=/app
