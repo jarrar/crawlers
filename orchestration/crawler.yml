@@ -19,5 +19,16 @@ services:
       ports:
         - "5000:5000"
 
-#      ulimits:
-#        nofile: 65536
+    crawler-db:
+      #image:
+      build: ../crawler-db/
+      hostname: crawler-db
+      networks:
+        crawler-net:
+          aliases:
+            - crawler-db
+            - crawler-db.docker
+      #volumes:
+        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+      ports:
+        - "5050:5050"

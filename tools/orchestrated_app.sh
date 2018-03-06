@@ -10,8 +10,8 @@ readonly OPTIONS_HELP=("Diplay this help text." \
          "Builds the docker images for the entire project." \
          "Runs the dockerized containers.")
 
-function die() { echo $@; exit 1; }
-function cleanup() { return 0;}
+function die()     { echo $@  ; exit 1 ; }
+function cleanup() { return 0 ; }
 
 trap cleanup EXIT
 
