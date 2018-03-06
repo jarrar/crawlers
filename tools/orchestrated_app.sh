@@ -1,6 +1,5 @@
 #!/bin/bash
-# Copyright (c) 1999 Cisco Systems, Inc.  All rights reserved.
-# AUTHOR:  Jarrar Jaffari (), jjaffari@cisco.com
+# AUTHOR:  Jarrar Jaffari
 set -o nounset
 readonly SCRIPT=${0##*/}
 readonly BASE_GIT_DIR=$(git rev-parse --show-toplevel)
