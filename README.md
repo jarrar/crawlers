@@ -10,10 +10,14 @@ response message body.
 # How to build it?
 You can first build the required docker images, using command:
 
-* ./tools/orchestrated_app.sh -b
+* `./tools/orchestrated_app.sh -b`
+
+When you build it should build all the required docker images that you can
+list:
+`docker images`
 
 # More Help
 
-`./tools/orchestrated_app.sh -h`
+* `./tools/orchestrated_app.sh -h`
 
 

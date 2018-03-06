@@ -8,9 +8,8 @@ readonly YAML_FILE=$BASE_GIT_DIR/orchestration/crawler.yml
 
 readonly OPTIONS="hbr"
 readonly OPTIONS_HELP=("Diplay this help text." \
-                        "Builds the docker images for the entire project." \
-                        "Runs the dockerized containers.")
-
+         "Builds the docker images for the entire project." \
+         "Runs the dockerized containers.")
 
 function die() { echo $@; exit 1; }
 function cleanup() { return 0;}
@@ -33,20 +32,31 @@ function show_help()
 function init()
 {
     BUILD_IMAGES="no"
+    LAUNCH_CONTAINERS="no"
+
     which docker-compose &> /dev/null
     [[ $? -ne 0 ]] && die "$(hostname) is missing docker-compose please install it before running it."
+    export COMPOSE_PROJECT_NAME=experiment
 }
 
 function build_images()
 {
     echo Building images
     docker-compose -f $YAML_FILE build
+}
 
+function launch_containers()
+{
+    echo Launching containers
+    docker-compose -f $YAML_FILE stop
+    docker-compose -f $YAML_FILE down
+    docker-compose -f $YAML_FILE up -d
 }
 
 function main()
 {
-   [[ $BUILD_IMAGES == "yes" ]] && build_images
+   [[ $BUILD_IMAGES == "yes" ]]         && build_images
+   [[ $LAUNCH_CONTAINERS == "yes" ]]    && launch_containers
 }
 
 #
@@ -57,8 +67,9 @@ init
 
 while getopts "$OPTIONS" opt; do
     case "$opt" in
-        b) BUILD_IMAGES="yes" ; shift 1 ;;
-        h) show_help          ; exit  0 ;;
+        b) BUILD_IMAGES="yes"       ; shift 1 ;;
+        r) LAUNCH_CONTAINERS="yes"  ; shift 1 ;;
+        h) show_help                ; exit  0 ;;
         --) shift ; break ;;
         *) echo "Internal error!" ; exit 1 ;;
     esac
