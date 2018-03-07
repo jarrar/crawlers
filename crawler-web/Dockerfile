@@ -19,11 +19,9 @@ RUN mkdir -p /app
 
 ADD ./files/packages.txt /packages.txt
 
-COPY ./app.py /app/app.py
-COPY ./config.py /app/config.py
-COPY ./__init__.py /app/
-ADD ./models /app/models
-ADD ./lib /app/lib
+COPY ./*.py /app/
+
+#COPY ./__init__.py /app/
 
 RUN pip3 install -r /packages.txt
 COPY ./files/entrypoint.sh /app/entrypoint.sh

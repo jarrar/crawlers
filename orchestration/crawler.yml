@@ -34,3 +34,19 @@ services:
         - "5050:5050"
       environment:
         - PYTHONPATH=/app
+
+    crawler-web:
+      #image:
+      build: ../crawler-web/
+      hostname: crawler-web
+      networks:
+        crawler-net:
+          aliases:
+            - crawler-web
+            - crawler-web.docker
+      #volumes:
+        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+      ports:
+        - "5080:5080"
+      environment:
+        - PYTHONPATH=/app

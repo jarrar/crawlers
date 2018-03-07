@@ -8,6 +8,7 @@ COPY ./app.py /app/app.py
 COPY ./files/packages.txt /packages.txt
 RUN pip install -r /packages.txt
 COPY ./files/entrypoint.sh /app/entrypoint.sh
+RUN apt-get install -y curl
 
 WORKDIR /app
 
