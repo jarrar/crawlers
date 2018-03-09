@@ -19,7 +19,7 @@ list:
 # How to run it?
 You can first build the required docker images, using command:
 
-* ./tools/orchestrated_app.sh -r
+* `./tools/orchestrated_app.sh -r`
 
 # More Help
 
