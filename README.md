@@ -16,6 +16,11 @@ When you build it should build all the required docker images that you can
 list:
 `docker images`
 
+# How to run it?
+You can first build the required docker images, using command:
+
+* ./tools/orchestrated_app.sh -r
+
 # More Help
 
 * `./tools/orchestrated_app.sh -h`
