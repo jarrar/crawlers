@@ -7,44 +7,53 @@ import json
 
 from flask import request
 from flask_restful import Resource
+import requests
 
 
 class HttpRequest(Resource):
-    """A class that provides REST implementation for the registration process with the CASM."""
+  """A class that provides REST implementation for the registration process with the CASM."""
 
-    def __init__(self):
-        pass
+  def __init__(self):
+    pass
 
-    # ---------------------------------------------------------------------------------------------
-    #                                        HTTP methods.
-    # ---------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------
+  #                                        HTTP methods.
+  # ---------------------------------------------------------------------------------------------
 
-    @classmethod
-    def get(cls):
-        """Implements http GET method."""
-        data_type = request.args.get('data_type')
-        if not data_type:
-            data_type = 'registration'
+  @classmethod
+  def get(cls):
+    """Implements http GET method."""
+    url = request.args.get('url')
+    if not url:
+        print("No Url was provided, returning.")
+        return None
 
-        print('JARRAR')
-        # if data_type == 'registration':
-        #     scripts_data = Script.get_registered_scripts()
-        #     print('scripts_data: %s' % scripts_data)
-        #     return json.dumps([s.serialize() for s in scripts_data])
-        #
-        # if data_type == 'no_switch_requests':
-        #     scripts_data = Script.get_scripts_without_switch()
-        #     print 'scripts_data: %s' % scripts_data
-        #     return json.dumps([s.serialize() for s in scripts_data])
+    full_url = url
 
-    @classmethod
-    def post(cls):
-        raise NotImplementedError("POST method is not supported.")
+    if not url.startswith('http://') and not url.startswith('https://'):
+        full_url = 'http://' + url
 
-    @classmethod
-    def put(cls):
-        raise NotImplementedError("PUT method is not supported.")
+    print("Making request: %s", full_url)
+    r = requests.get(full_url)
 
-    @classmethod
-    def delete(cls):
-        raise NotImplementedError("DELETE method is not supported.")
+    r.raise_for_status()
+
+    response = dict()
+    response['status_code'] = r.status_code
+    response['char_count'] = len(r.text)
+
+    print("Response: %s", response)
+
+    return json.dumps(response)
+
+  @classmethod
+  def post(cls):
+    raise NotImplementedError("POST method is not supported.")
+
+  @classmethod
+  def put(cls):
+    raise NotImplementedError("PUT method is not supported.")
+
+  @classmethod
+  def delete(cls):
+    raise NotImplementedError("DELETE method is not supported.")

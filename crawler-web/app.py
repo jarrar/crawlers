@@ -22,15 +22,14 @@ file_handler.setFormatter(Formatter('%(asctime)s %(levelname)s: %(message)s '
 app.logger.addHandler(file_handler)
 
 app.logger.info('=============================================================================')
-app.logger.info("                        'crwaler-db' app started.")
+app.logger.info("                        'crwaler-web' app started.")
 app.logger.info('=============================================================================')
 
 from flask_restful import Api
 
 api = Api(app)
 
-app.logger.info('APP REST API ready ...)')
-
+app.logger.info('WEB-APP REST API ready ...)')
 api.add_resource(HttpRequest, '/api/v1.0/http_request')
 
 if __name__ == '__main__':

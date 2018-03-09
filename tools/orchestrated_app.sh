@@ -46,9 +46,11 @@ function build_images()
 
 function launch_containers()
 {
-    echo Launching containers
-    docker-compose -f $YAML_FILE stop
+    echo Stopping containers
+    #docker-compose -f $YAML_FILE stop
     docker-compose -f $YAML_FILE down
+    echo Launcching containers
+    set -x
     docker-compose -f $YAML_FILE up -d
 }
 

@@ -14,8 +14,14 @@ services:
           aliases:
             - crawler-app
             - crawler-app.docker
-      #volumes:
-        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+      environment:
+        - WORKSPACE
+        - WEB_URL=http://crawler-web.docker:5080/api/v1.0/http_request
+        - DB_URL=http://crawler-db.docker:5050/api/v1.0/http_record
+        - PYTHONPATH=/app
+        - PYTHONDONTWRITEBYTECODE=1
+      volumes:
+        - $WORKSPACE/crawlers/crawler-app:/app
       ports:
         - "5000:5000"
 
@@ -28,8 +34,10 @@ services:
           aliases:
             - crawler-db
             - crawler-db.docker
-      #volumes:
-        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+      environment:
+        - WORKSPACE
+      volumes:
+        - $WORKSPACE/crawlers/crawler-db:/app
       ports:
         - "5050:5050"
       environment:
@@ -44,8 +52,10 @@ services:
           aliases:
             - crawler-web
             - crawler-web.docker
-      #volumes:
-        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+      environment:
+        - WORKSPACE
+      volumes:
+        - $WORKSPACE/crawlers/crawler-web:/app
       ports:
         - "5080:5080"
       environment:

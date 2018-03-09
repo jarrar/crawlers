@@ -1,4 +1,4 @@
-'''This module is for the casm related libraries.
+'''This module is for the related libraries.
 '''
 from sqlalchemy.inspection import inspect
 

@@ -1,10 +1,10 @@
 """
-Pydoc
-
+Pydoc.
 """
 from flask import Flask
 import logging
 from logging import Formatter, FileHandler
+
 
 # the name app is also imported in models/__init__.py,
 app = Flask(__name__)
@@ -23,33 +23,24 @@ file_handler.setFormatter(Formatter('%(asctime)s %(levelname)s: %(message)s '
 app.logger.addHandler(file_handler)
 
 app.logger.info('=============================================================================')
-app.logger.info("                        'crwaler-db' app started.")
+app.logger.info("                        app=crwaler-db started.")
 app.logger.info('=============================================================================')
 
 # the 'db' import must come after instantiating Flask(__name__)
 from models import db
-
-from models import (HttpRecord)
+from models import HttpRecord
 
 from flask_restful import Api
-
-# def populate_default_data():
-#     casm = CasmData.CasmData()
-#     casm.change_mode('single')
-
+import DatabaseApi
 
 db.create_all()
 
-#populate_default_data()
-
 api = Api(app)
 
-app.logger.info('APP REST API ready ...)')
+app.logger.info('[crawler-db] REST API ready APP :)')
 
-# api.add_resource(Register, '/api/v1.0/register')
-# api.add_resource(Cms, '/api/v1.0/cms/services')
-# api.add_resource(HAStatus, '/api/v1.0/ha')
-# api.add_resource(CasmMode, '/api/v1.0/mode')
+# curl -X PUT "${DB_URL}?url=cnn.com&chars_num=2"
+api.add_resource(DatabaseApi.DatabaseApi, '/api/v1.0/http_record')
 
 if __name__ == '__main__':
     app.run(debug=True)
