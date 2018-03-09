@@ -1,0 +1,9 @@
+Flask==0.10.1
+wtforms
+Jinja2==2.8
+Werkzeug==0.11.5
+#flask-restful
+#sqlalchemy
+#flask_sqlalchemy
+#sqlalchemy-migrate
+uwsgi

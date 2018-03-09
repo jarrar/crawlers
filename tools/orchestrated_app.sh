@@ -1,6 +1,5 @@
 #!/bin/bash
-# Copyright (c) 1999 Cisco Systems, Inc.  All rights reserved.
-# AUTHOR:  Jarrar Jaffari (), jjaffari@cisco.com
+# AUTHOR:  Jarrar Jaffari
 set -o nounset
 readonly SCRIPT=${0##*/}
 readonly BASE_GIT_DIR=$(git rev-parse --show-toplevel)
@@ -11,8 +10,8 @@ readonly OPTIONS_HELP=("Diplay this help text." \
          "Builds the docker images for the entire project." \
          "Runs the dockerized containers.")
 
-function die() { echo $@; exit 1; }
-function cleanup() { return 0;}
+function die()     { echo $@  ; exit 1 ; }
+function cleanup() { return 0 ; }
 
 trap cleanup EXIT
 
@@ -47,9 +46,11 @@ function build_images()
 
 function launch_containers()
 {
-    echo Launching containers
-    docker-compose -f $YAML_FILE stop
+    echo Stopping containers
+    #docker-compose -f $YAML_FILE stop
     docker-compose -f $YAML_FILE down
+    echo Launcching containers
+    set -x
     docker-compose -f $YAML_FILE up -d
 }
 

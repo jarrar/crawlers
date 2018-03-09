@@ -10,6 +10,8 @@ function cleanup() { return 0;}
 
 trap cleanup EXIT
 
-python app.py
+uwsgi --ini /etc/uwsgi.ini
+
+#python app.py
 
 while true; do sleep 2; done

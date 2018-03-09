@@ -1,23 +1,62 @@
 version: '2.1'
 
 networks:
-  jarrar-net:
+  crawler-net:
      driver: bridge
 
 services:
-    web-app:
+    crawler-app:
       #image:
-      build: ../
-      hostname: web-app
+      build: ../crawler-app/
+      hostname: crawler-app
       networks:
-        jarrar-net:
+        crawler-net:
           aliases:
-            - web-app
-            - web-app.docker
-      #volumes:
-        #- D/var/lib/elk/data/elasticsearch:/var/lib/elasticsearch
+            - crawler-app
+            - crawler-app.docker
+      environment:
+        - WORKSPACE
+        - WEB_URL=http://crawler-web.docker:5080/api/v1.0/http_request
+        - DB_URL=http://crawler-db.docker:5050/api/v1.0/http_record
+        - PYTHONPATH=/app
+        - PYTHONDONTWRITEBYTECODE=1
+      volumes:
+        - $WORKSPACE/crawlers/crawler-app:/app
       ports:
         - "5000:5000"
 
-#      ulimits:
-#        nofile: 65536
+    crawler-db:
+      #image:
+      build: ../crawler-db/
+      hostname: crawler-db
+      networks:
+        crawler-net:
+          aliases:
+            - crawler-db
+            - crawler-db.docker
+      environment:
+        - WORKSPACE
+      volumes:
+        - $WORKSPACE/crawlers/crawler-db:/app
+      ports:
+        - "5050:5050"
+      environment:
+        - PYTHONPATH=/app
+
+    crawler-web:
+      #image:
+      build: ../crawler-web/
+      hostname: crawler-web
+      networks:
+        crawler-net:
+          aliases:
+            - crawler-web
+            - crawler-web.docker
+      environment:
+        - WORKSPACE
+      volumes:
+        - $WORKSPACE/crawlers/crawler-web:/app
+      ports:
+        - "5080:5080"
+      environment:
+        - PYTHONPATH=/app
