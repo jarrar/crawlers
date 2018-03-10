@@ -7,7 +7,7 @@ networks:
 services:
     crawler-app:
       #image:
-      build: ../crawler-app/
+      build: ../../crawler-app/
       hostname: crawler-app
       networks:
         crawler-net:
@@ -27,7 +27,7 @@ services:
 
     crawler-db:
       #image:
-      build: ../crawler-db/
+      build: ../../crawler-db/
       hostname: crawler-db
       networks:
         crawler-net:
@@ -45,7 +45,7 @@ services:
 
     crawler-web:
       #image:
-      build: ../crawler-web/
+      build: ../../crawler-web/
       hostname: crawler-web
       networks:
         crawler-net:

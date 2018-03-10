@@ -48,6 +48,12 @@ You can first build the required docker images, using command:
 
 * `./tools/orchestrated_app.sh -r`
 
+# How to publish images?
+
+You need to login with an account at docker.io then:
+
+* `./tools/orchestrated_app.sh -p`
+
 # More Help
 
 * `./tools/orchestrated_app.sh -h`
@@ -64,7 +70,16 @@ The application is made up of three micro services, namely:
     This micro service provides REST based interface to all other micro services.
 
 3. crawler-web
-    This micro service interacts with the web and get responses off of the wwww and
-    communicates through a REST interface.
+    This micro service interacts with the web and get responses off of the site and
+    communicates through a REST interface telling how many chracters its response had.
 
-# Design
+# Tech notes.
+
+These services are based on:
+
+    * Flask (uWSGI) framework.
+    * The REST services are provided through flask_restful.
+    * The database access is provided through SQLAlchemy.
+    * Sqlite3 is the database used.
+    * docker images/containers are used as a execution platform.
+
