@@ -9,13 +9,15 @@ RUN mkdir -p /app
 #ADD . /webapp
 #RUN rm -f Dockerfile
 
-COPY ./microapp.py /app/microapp.py
-ADD ./files /app/files/.
-COPY ./files/packages.txt /app/packages.txt
-COPY ./files/uwsgi.ini /etc/uwsgi.ini
+ADD . /app/
 
-RUN pip install -r /app/files/packages.txt
+#COPY ./microapp.py /app/microapp.py
+#ADD ./files /app/files/.
+#COPY ./files/packages.txt /app/packages.txt
+
 COPY ./files/entrypoint.sh /entrypoint.sh
+COPY ./files/uwsgi.ini /etc/uwsgi.ini
+RUN pip install -r /app/files/packages.txt
 
 RUN apt-get install -y curl
 

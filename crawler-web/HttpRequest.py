@@ -33,15 +33,20 @@ class HttpRequest(Resource):
     if not url.startswith('http://') and not url.startswith('https://'):
         full_url = 'http://' + url
 
-    print("Making request: %s", full_url)
-    r = requests.get(full_url)
-
-    r.raise_for_status()
-
     response = dict()
-    response['status_code'] = r.status_code
-    response['char_count'] = len(r.text)
+    print("Making request:", full_url)
 
+    try:
+        resp = requests.get(full_url)
+        resp.raise_for_status()
+        response['status_code'] = resp.status_code
+        response['char_count'] = len(resp.text)
+    except Exception as ex:
+        # this ensures that a bad response is recorded as a 0 chars from the server.
+        response['status_code'] = 200
+        response['char_count'] = 0
+        print(ex)
+        
     print("Response: %s", response)
 
     return json.dumps(response)

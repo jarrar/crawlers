@@ -3,12 +3,14 @@
 set -o nounset
 readonly SCRIPT=${0##*/}
 readonly BASE_GIT_DIR=$(git rev-parse --show-toplevel)
-readonly YAML_FILE=$BASE_GIT_DIR/orchestration/crawler.yml
+readonly PROD_YAML_FILE=$BASE_GIT_DIR/orchestration/crawler.yml
+readonly DEV_YAML_FILE=$BASE_GIT_DIR/orchestration/dev.yml
 
-readonly OPTIONS="hbr"
+readonly OPTIONS="hbrd"
 readonly OPTIONS_HELP=("Diplay this help text." \
          "Builds the docker images for the entire project." \
-         "Runs the dockerized containers.")
+         "Runs the dockerized containers." \
+         "Run in dev environment")
 
 function die()     { echo $@  ; exit 1 ; }
 function cleanup() { return 0 ; }
@@ -32,6 +34,8 @@ function init()
 {
     BUILD_IMAGES="no"
     LAUNCH_CONTAINERS="no"
+    DEVELOPMENT_ENV="no"
+    YAML_FILE=$PROD_YAML_FILE
 
     which docker-compose &> /dev/null
     [[ $? -ne 0 ]] && die "$(hostname) is missing docker-compose please install it before running it."
@@ -53,6 +57,12 @@ function launch_containers()
     set -x
     docker-compose -f $YAML_FILE up -d
 }
+function show_env()
+{
+    cat <<-EOF
+    YAML_FILE=$YAML_FILE
+EOF
+}
 
 function main()
 {
@@ -68,12 +78,13 @@ init
 
 while getopts "$OPTIONS" opt; do
     case "$opt" in
-        b) BUILD_IMAGES="yes"       ; shift 1 ;;
-        r) LAUNCH_CONTAINERS="yes"  ; shift 1 ;;
+        b) BUILD_IMAGES="yes"       ;;
+        r) LAUNCH_CONTAINERS="yes"  ;;
+        d) YAML_FILE=$DEV_YAML_FILE ;;
         h) show_help                ; exit  0 ;;
-        --) shift ; break ;;
-        *) echo "Internal error!" ; exit 1 ;;
+        \?) echo "Internal error!" ; exit 1 ;;
     esac
 done
 
+show_env
 main

@@ -6,8 +6,8 @@ networks:
 
 services:
     crawler-app:
-      image: docker.io/jarrar/crawler-app
-      #build: ../crawler-app/
+      #image:
+      build: ../crawler-app/
       hostname: crawler-app
       networks:
         crawler-net:
@@ -15,18 +15,19 @@ services:
             - crawler-app
             - crawler-app.docker
       environment:
+        - WORKSPACE
         - WEB_URL=http://crawler-web.docker:5080/api/v1.0/http_request
         - DB_URL=http://crawler-db.docker:5050/api/v1.0/http_record
         - PYTHONPATH=/app
         - PYTHONDONTWRITEBYTECODE=1
-      #volumes:
-      #  - $WORKSPACE/crawlers/crawler-app:/app
+      volumes:
+        - $WORKSPACE/crawlers/crawler-app:/app
       ports:
         - "5000:5000"
 
     crawler-db:
-      image: docker.io/jarrar/crawler-db
-      #build: ../crawler-db/
+      #image:
+      build: ../crawler-db/
       hostname: crawler-db
       networks:
         crawler-net:
@@ -35,16 +36,16 @@ services:
             - crawler-db.docker
       environment:
         - WORKSPACE
-      #volumes:
-      #  - $WORKSPACE/crawlers/crawler-db:/app
+      volumes:
+        - $WORKSPACE/crawlers/crawler-db:/app
       ports:
         - "5050:5050"
       environment:
         - PYTHONPATH=/app
 
     crawler-web:
-      image: docker.io/jarrar/crawler-web
-      #build: ../crawler-web/
+      #image:
+      build: ../crawler-web/
       hostname: crawler-web
       networks:
         crawler-net:
@@ -53,8 +54,8 @@ services:
             - crawler-web.docker
       environment:
         - WORKSPACE
-      #volumes:
-      #  - $WORKSPACE/crawlers/crawler-web:/app
+      volumes:
+        - $WORKSPACE/crawlers/crawler-web:/app
       ports:
         - "5080:5080"
       environment:

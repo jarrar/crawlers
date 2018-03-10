@@ -10,8 +10,10 @@ RUN apt-get install -y build-essential \
 RUN mkdir -p /app
 #ADD ./files /app/files
 
+ADD . /app/
+
 COPY ./files/packages.txt /app/packages.txt
-COPY ./*.py /app/
+#COPY ./*.py /app/
 
 RUN pip3 install -r /app/packages.txt
 
