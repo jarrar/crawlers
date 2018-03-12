@@ -8,7 +8,6 @@ readonly DEV_YAML_FILE=$BASE_GIT_DIR/orchestration/crawler/dev.yml
 readonly TOOLS_DIR=$BASE_GIT_DIR/tools
 readonly OAPP=$TOOLS_DIR/orchestrated_app.sh
 readonly PARSE_YAML=$TOOLS_DIR/parse_yaml.py
-readonly IMAGE_NAME_PATTERN="containers.cisco.com"
 readonly DOCKER_USER_ID="jarrar"
 
 readonly OPTIONS="hbrpd"
