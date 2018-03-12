@@ -9,6 +9,7 @@ readonly TOOLS_DIR=$BASE_GIT_DIR/tools
 readonly OAPP=$TOOLS_DIR/orchestrated_app.sh
 readonly PARSE_YAML=$TOOLS_DIR/parse_yaml.py
 readonly DOCKER_USER_ID="jarrar"
+readonly LOGS_DIR=/tmp/docker/logs
 
 readonly OPTIONS="hbrpd"
 readonly OPTIONS_HELP=("Display this help text."            \
@@ -50,6 +51,9 @@ function init()
     which docker-compose &> /dev/null
     [[ $? -ne 0 ]] && die "$(hostname) is missing docker-compose please install it before running it."
     export COMPOSE_PROJECT_NAME=experiment
+
+    [[ -e $LOGS_DIR ]] || mkdir -p $LOGS_DIR &> /dev/null
+    export WORKSPACE=${BASE_GIT_DIR%/*}
 }
 
 function build_images()
@@ -71,6 +75,7 @@ function show_env()
 {
     cat <<-EOF
     YAML_FILE=$YAML_FILE
+    WORKSPACE=$WORKSPACE
 EOF
 }
 

@@ -20,7 +20,8 @@ services:
         - PYTHONPATH=/app
         - PYTHONDONTWRITEBYTECODE=1
       #volumes:
-      #  - $WORKSPACE/crawlers/crawler-app:/app
+        #- /tmp/docker/logs/app:/var/log
+
       ports:
         - "5000:5000"
 
@@ -36,7 +37,7 @@ services:
       environment:
         - WORKSPACE
       #volumes:
-      #  - $WORKSPACE/crawlers/crawler-db:/app
+        #- /tmp/docker/logs/db:/var/log
       ports:
         - "5050:5050"
       environment:
@@ -54,7 +55,7 @@ services:
       environment:
         - WORKSPACE
       #volumes:
-      #  - $WORKSPACE/crawlers/crawler-web:/app
+        #- /tmp/docker/logs/web:/var/log
       ports:
         - "5080:5080"
       environment:
